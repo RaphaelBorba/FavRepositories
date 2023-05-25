@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
@@ -15,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex justify-center w-screen h-screen pt-20`}>{children}</body>
+      <body className={`${inter.className} flex h-screen w-screen justify-center pt-20`}>
+        {children}
+        <ToastContainer/>
+      </body>
     </html>
   )
 }

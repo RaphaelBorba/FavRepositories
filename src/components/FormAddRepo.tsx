@@ -1,11 +1,31 @@
 'use client'
-import { FormEvent } from "react"
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react"
+import api from "@/services/api";
+import { toast } from "react-toastify";
 
-export default function FormAddRepo() {
+interface FormAddRepoProps {
+
+    repo: string;
+    setRepo: Dispatch<SetStateAction<string>>;
+    setRepositories: Dispatch<SetStateAction<never[]>>;
+}
+
+export default function FormAddRepo({ setRepositories, repo, setRepo }: FormAddRepoProps) {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
+
+        api.get(`/repos/${repo}`)
+        .then( (e) =>{
+            console.log(e.data)
+            toast('good')
+        })
+        .catch( (e) =>{
+            console.log(e.response.data)
+        })
+
+        setRepo('')
     }
 
     return (
@@ -14,6 +34,9 @@ export default function FormAddRepo() {
             <input
                 className="h-10 w-[90%] rounded-md border-[1px] border-[#bbbbbbff] pl-3 text-gray-700 focus:outline-none"
                 required
+                value={repo}
+                onChange={(e) => setRepo(e.target.value)}
+                placeholder="Adicionar Repositórios"
                 type="text" />
             <button
                 className="w-[40px] rounded-md bg-[#233442] text-2xl text-white duration-500 hover:bg-[#3c5469]"
