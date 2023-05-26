@@ -7,22 +7,31 @@ interface FormAddRepoProps {
 
     repo: string;
     setRepo: Dispatch<SetStateAction<string>>;
-    setRepositories: Dispatch<SetStateAction<never[]>>;
+    repositories: any[];
+    setRepositories: Dispatch<SetStateAction<any[]>>;
 }
 
-export default function FormAddRepo({ setRepositories, repo, setRepo }: FormAddRepoProps) {
+export default function FormAddRepo({repositories, setRepositories, repo, setRepo }: FormAddRepoProps) {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
 
+        let arrayRep = repositories
+
         api.get(`/repos/${repo}`)
         .then( (e) =>{
-            console.log(e.data)
+
+            arrayRep.push(e.data)
+
+            setRepositories(arrayRep)
+
             toast.success('Repositório adicionado!', {autoClose:1000})
         })
         .catch( (e) =>{
+
             console.log(e.response.data)
+
             toast.error('Repositório não existe!', {autoClose:1000})
         })
 

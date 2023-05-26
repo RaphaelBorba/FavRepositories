@@ -11,9 +11,9 @@ import { ToastContainer } from 'react-toastify';
 export default function Home() {
 
   const [repo, setRepo] = useState('')
-  const [repositories, setRepositories] = useState([])
+  const [repositories, setRepositories] = useState(new Array())
   
-
+  console.log(repositories)
   return (
     <>
     <ToastContainer/>
@@ -21,7 +21,7 @@ export default function Home() {
 
       <TitlePage title="Meus repositórios"/>
 
-      <FormAddRepo setRepositories={setRepositories} repo={repo} setRepo={setRepo}/>
+      <FormAddRepo repositories={repositories} setRepositories={setRepositories} repo={repo} setRepo={setRepo}/>
 
     </Container>
     </>
