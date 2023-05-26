@@ -19,10 +19,11 @@ export default function FormAddRepo({ setRepositories, repo, setRepo }: FormAddR
         api.get(`/repos/${repo}`)
         .then( (e) =>{
             console.log(e.data)
-            toast('good')
+            toast.success('Repositório adicionado!', {autoClose:1000})
         })
         .catch( (e) =>{
             console.log(e.response.data)
+            toast.error('Repositório não existe!', {autoClose:1000})
         })
 
         setRepo('')

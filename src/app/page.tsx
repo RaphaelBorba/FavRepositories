@@ -5,7 +5,8 @@ import Container from "@/components/Container";
 import FormAddRepo from "@/components/FormAddRepo";
 import TitlePage from "@/components/TitlePage";
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function Home() {
 
@@ -14,7 +15,8 @@ export default function Home() {
   
 
   return (
-    
+    <>
+    <ToastContainer/>
     <Container >
 
       <TitlePage title="Meus repositórios"/>
@@ -22,5 +24,6 @@ export default function Home() {
       <FormAddRepo setRepositories={setRepositories} repo={repo} setRepo={setRepo}/>
 
     </Container>
+    </>
   )
 }
