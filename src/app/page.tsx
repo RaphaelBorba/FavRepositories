@@ -15,23 +15,28 @@ export default function Home() {
   const [repo, setRepo] = useState('')
   const [repositories, setRepositories] = useState(new Array())
 
-  
   return (
     <>
       <ToastContainer />
       <Container >
 
-        <TitlePage title="Meus repositórios" />
+        <TitlePage title="Repositórios Favoritos" />
 
-        <FormAddRepo repositories={repositories} setRepositories={setRepositories} repo={repo} setRepo={setRepo} />
+        <FormAddRepo repositories={repositories} setRepositories={setRepositories} repo={repo} setRepo={setRepo}/>
 
         {repositories[0] ?
           <List>
 
-              {repositories.map((e, i) =>{
+            {repositories.map((e, i) => {
 
-                return <LiRepository name={e.name} fullName={e.full_name}  key={i} />
-              })}
+              return <LiRepository 
+              name={e.name} 
+              fullName={e.full_name} 
+              key={i} 
+              index={i}
+              repositories={repositories} 
+              setRepositories={setRepositories} />
+            })}
           </List>
           :
           ''

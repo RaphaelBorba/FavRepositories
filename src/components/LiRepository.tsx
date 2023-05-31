@@ -1,22 +1,42 @@
 import { Trash2, Menu } from "lucide-react"
 import Link from "next/link"
+import { Dispatch, SetStateAction } from "react";
 
 interface LiRepositoryProps {
     name: string
     fullName: string
+    repositories: any;
+    setRepositories: Dispatch<SetStateAction<any[]>>;
+    index:number
 }
 
-export default function LiRepository({ name, fullName }: LiRepositoryProps) {
+export default function LiRepository({ name, fullName, repositories, setRepositories, index }: LiRepositoryProps) {
+
+    const removeRepo = (array: [], index: number) => {
+
+        let newArray = [...array]
+
+        newArray.splice(index,1)
+    
+        setRepositories(newArray)
+      }
 
     return (
         <li className="flex items-center justify-between px-1 py-4">
+
             <div className="flex items-center gap-3">
-                <Trash2 strokeWidth={2} size={26} />
+
+                <Trash2 onClick={()=>removeRepo(repositories, index)} className="cursor-pointer" strokeWidth={2} size={26} />
+
                 <span className="font-bold">{fullName}</span>
             </div>
+
             <Link href={`/repository/${name}`}>
+
                 <Menu strokeWidth={2} size={26} />
+
             </Link>
+
         </li>
     )
 }

@@ -69,7 +69,7 @@ export default function FormAddRepo({ repositories, setRepositories, repo, setRe
                 required
                 value={repo}
                 onChange={(e) => setRepo(e.target.value)}
-                placeholder="Adicionar Repositórios"
+                placeholder="facebook/react"
                 type="text" />
             <button
                 className={`flex w-[40px] items-center justify-center rounded-md bg-[#233442] text-2xl text-white duration-500 hover:bg-[#3c5469] ${loading ? 'opacity-20' : ''}`}
