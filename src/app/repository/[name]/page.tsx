@@ -1,6 +1,6 @@
 
 export default function Repository({params}:{params:{
-    id:string
+    name:string
 }}){
 
     
@@ -10,7 +10,7 @@ export default function Repository({params}:{params:{
 
         <main>
             
-            {`ID: ${params.id}`}
+            {`ID: ${params.name}`}
         </main>
     )
 }

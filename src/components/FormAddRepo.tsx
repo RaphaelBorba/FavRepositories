@@ -1,7 +1,8 @@
 'use client'
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 import api from "@/services/api";
 import { toast } from "react-toastify";
+import { Loader2, Plus } from "lucide-react"
 
 interface FormAddRepoProps {
 
@@ -11,31 +12,53 @@ interface FormAddRepoProps {
     setRepositories: Dispatch<SetStateAction<any[]>>;
 }
 
-export default function FormAddRepo({repositories, setRepositories, repo, setRepo }: FormAddRepoProps) {
+export default function FormAddRepo({ repositories, setRepositories, repo, setRepo }: FormAddRepoProps) {
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const [loading, setLoading] = useState(false)
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
 
-        let arrayRep = repositories
+        setLoading(true)
+
+        await new Promise(r => setTimeout(r, 500))
+
+        let arrayRep = [...repositories]
 
         api.get(`/repos/${repo}`)
-        .then( (e) =>{
+            .then((e) => {
 
-            arrayRep.push(e.data)
+                if (checkExistRepo(repo, repositories)) {
 
-            setRepositories(arrayRep)
+                    toast.error('Repositório já adicionado!', { autoClose: 1000 })
+                } else {
 
-            toast.success('Repositório adicionado!', {autoClose:1000})
-        })
-        .catch( (e) =>{
+                    arrayRep.push(e.data)
 
-            console.log(e.response.data)
+                    setRepositories(arrayRep)
 
-            toast.error('Repositório não existe!', {autoClose:1000})
-        })
+                    toast.success('Repositório adicionado!', { autoClose: 1000 })
+                }
 
+            })
+            .catch((e) => {
+
+                console.log(e.response.data)
+
+                toast.error('Repositório não existe!', { autoClose: 1000 })
+            })
+
+        setLoading(false)
         setRepo('')
+    }
+
+    const checkExistRepo = (name: string, repositories: { full_name: string }[]) => {
+
+        for (let i in repositories) {
+
+            if (repositories[i].full_name === name && repositories[0]) return true
+        }
     }
 
     return (
@@ -49,9 +72,15 @@ export default function FormAddRepo({repositories, setRepositories, repo, setRep
                 placeholder="Adicionar Repositórios"
                 type="text" />
             <button
-                className="w-[40px] rounded-md bg-[#233442] text-2xl text-white duration-500 hover:bg-[#3c5469]"
+                className={`flex w-[40px] items-center justify-center rounded-md bg-[#233442] text-2xl text-white duration-500 hover:bg-[#3c5469] ${loading ? 'opacity-20' : ''}`}
+                disabled={loading}
                 type="submit">
-                +
+                {
+                    loading ?
+                        <Loader2 className="animate-spin" strokeWidth={3} size={20} />
+                        :
+                        <Plus strokeWidth={3} size={20} />
+                }
             </button>
         </form>
     )
