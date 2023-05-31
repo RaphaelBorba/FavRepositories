@@ -9,12 +9,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import List from "@/components/List";
 import LiRepository from "@/components/LiRepository";
-import Popout from "@/components/Popout";
 
 export default function Home() {
 
   const [repo, setRepo] = useState('')
   const [repositories, setRepositories] = useState(new Array())
+
+  useEffect(()=>{
+
+    let stringArray = localStorage.getItem('repos') as string
+    
+    let repArray = JSON.parse(stringArray)
+
+    setRepositories(repArray)
+  },[])
 
   return (
     <>

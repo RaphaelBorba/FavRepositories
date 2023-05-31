@@ -21,6 +21,8 @@ export default function LiRepository({ name, fullName, repositories, setReposito
 
         newArray.splice(index, 1)
 
+        localStorage.setItem('repos', JSON.stringify(newArray))
+
         setRepositories(newArray)
 
         setPopout(false)

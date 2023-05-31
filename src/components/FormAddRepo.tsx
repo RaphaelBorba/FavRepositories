@@ -22,8 +22,6 @@ export default function FormAddRepo({ repositories, setRepositories, repo, setRe
 
         setLoading(true)
 
-        await new Promise(r => setTimeout(r, 500))
-
         let arrayRep = [...repositories]
 
         api.get(`/repos/${repo}`)
@@ -31,10 +29,12 @@ export default function FormAddRepo({ repositories, setRepositories, repo, setRe
 
                 if (checkExistRepo(repo, repositories)) {
 
-                    toast.error('Repositório já adicionado!', { autoClose: 1000 })
+                    toast.error('Repositório já adicionado!', { autoClose: 2000 })
                 } else {
 
                     arrayRep.push(e.data)
+
+                    localStorage.setItem('repos', JSON.stringify(arrayRep))
 
                     setRepositories(arrayRep)
 
@@ -46,7 +46,7 @@ export default function FormAddRepo({ repositories, setRepositories, repo, setRe
 
                 console.log(e.response.data)
 
-                toast.error('Repositório não existe!', { autoClose: 1000 })
+                toast.error('Repositório não existe!', { autoClose: 2000 })
             })
 
         setLoading(false)
