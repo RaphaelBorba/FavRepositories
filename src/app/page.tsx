@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import List from "@/components/List";
 import LiRepository from "@/components/LiRepository";
+import Popout from "@/components/Popout";
 
 export default function Home() {
 
