@@ -21,7 +21,8 @@ export default function Home() {
     
     let repArray = JSON.parse(stringArray)
 
-    setRepositories(repArray)
+    if(repArray) setRepositories(repArray)
+    
   },[])
 
   return (
@@ -33,7 +34,7 @@ export default function Home() {
 
         <FormAddRepo repositories={repositories} setRepositories={setRepositories} repo={repo} setRepo={setRepo}/>
 
-        {repositories[0] ?
+        { repositories[0] ?
           <List>
 
             {repositories.map((e, i) => {
@@ -48,7 +49,7 @@ export default function Home() {
             })}
           </List>
           :
-          ''
+          <h1 className="text-center">Não há repositórios adicionados!</h1>
         }
 
       </Container>

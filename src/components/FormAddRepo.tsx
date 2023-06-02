@@ -57,7 +57,7 @@ export default function FormAddRepo({ repositories, setRepositories, repo, setRe
 
         for (let i in repositories) {
 
-            if (repositories[i].full_name === name && repositories[0]) return true
+            if (repositories[i].full_name.toLowerCase() === name.toLowerCase() && repositories[0]) return true
         }
     }
 

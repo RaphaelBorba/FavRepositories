@@ -4,4 +4,23 @@
 
 body{
   background-color:#2359B5;
+  padding-block: 50px;
+}
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f130;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8c8c8cbf;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #55555580;
 }
