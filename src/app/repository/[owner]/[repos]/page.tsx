@@ -1,6 +1,7 @@
 'use client'
 import Container from "@/components/Container"
 import RepositoryHeader from "@/components/RepositoryHeader"
+import Skeleton from "@/components/Skeleton"
 import api from "@/services/api"
 import { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
@@ -48,7 +49,7 @@ export default function Repository({ params }: {
 
             {
                 loading ?
-                    <h1>Carregando</h1>
+                    <Skeleton/>
                     :
 
                     <RepositoryHeader repositoryName={dataRepo.name} imageUser={dataRepo.owner.avatar_url} repositoryDescription={dataRepo.description} />
