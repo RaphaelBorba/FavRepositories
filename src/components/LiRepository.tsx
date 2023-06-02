@@ -11,7 +11,7 @@ interface LiRepositoryProps {
     index: number
 }
 
-export default function LiRepository({ name, fullName, repositories, setRepositories, index }: LiRepositoryProps) {
+export default function LiRepository({ fullName, repositories, setRepositories, index }: LiRepositoryProps) {
 
     const [popout, setPopout] = useState(false)
 
@@ -40,7 +40,7 @@ export default function LiRepository({ name, fullName, repositories, setReposito
                     <span className="font-bold">{fullName}</span>
                 </div>
 
-                <Link href={`/repository/${name}`}>
+                <Link href={`/repository/${fullName}`}>
 
                     <Menu strokeWidth={2} size={26} />
 
