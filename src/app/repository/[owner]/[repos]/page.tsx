@@ -24,7 +24,7 @@ export default function Repository({ params }: {
 
 
         async function load() {
-
+            
             const responseRepo = await api.get(`/repos/${params.owner}/${params.repos}`)
 
             const responsesIssues = await api.get(`/repos/${params.owner}/${params.repos}/issues`, {
