@@ -1,5 +1,7 @@
 'use client'
 import Container from "@/components/Container"
+import Filter from "@/components/Filter"
+import FooterPage from "@/components/FooterPage"
 import Issues from "@/components/Issues"
 import RepositoryHeader from "@/components/RepositoryHeader"
 import Skeleton from "@/components/Skeleton"
@@ -17,8 +19,10 @@ export default function Repository({ params }: {
     const [dataRepo, setDataRepo] = useState<any>({})
     const [issues, setIssues] = useState<AxiosResponse | any | void>(null)
     const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(1)
+    const [state, setState] = useState('all')
 
-    console.log(dataRepo)
+    console.log(page)
     console.log(issues)
 
     useEffect(() => {
@@ -30,7 +34,7 @@ export default function Repository({ params }: {
 
             const responsesIssues = await api.get(`/repos/${params.owner}/${params.repos}/issues`, {
                 params: {
-                    state: 'open',
+                    state,
                     per_page: 5
                 }
             })
@@ -42,7 +46,40 @@ export default function Repository({ params }: {
 
         load()
 
-    }, [params.owner, params.repos])
+    }, [params.owner, params.repos, state])
+
+    useEffect(() => {
+
+        async function loadPage() {
+
+            const responsesIssues = await api.get(`/repos/${params.owner}/${params.repos}/issues`, {
+                params: {
+                    state,
+                    page,
+                    per_page: 5
+                }
+            })
+
+            setIssues(responsesIssues.data)
+        }
+
+        loadPage()
+
+    }, [page, params.owner, params.repos, state])
+
+    const changePage = (action: 'increase' | 'decrease') => {
+
+        let i = page
+
+        if (action === 'increase') {
+            i++
+            setPage(i)
+
+        } else if (action === 'decrease') {
+            i--
+            setPage(i)
+        }
+    }
 
     return (
 
@@ -54,11 +91,18 @@ export default function Repository({ params }: {
                     :
                     <>
                         <RepositoryHeader repositoryName={dataRepo.name} imageUser={dataRepo.owner.avatar_url} repositoryDescription={dataRepo.description} />
+                        <Filter state={state} setState={setState}/>
                         <ul className="flex w-[100%] flex-col gap-10">
 
-                            {issues.map((e: any, i: any)=> <Issues key={i} issue={e} />)}
+                            {
+                                issues ?
+                                    issues.map((e: any, i: any) => <Issues key={i} issue={e} />)
+                                    :
+                                    ''
+                            }
 
                         </ul>
+                        <FooterPage changePage={changePage} page={page}/>
                     </>
             }
 
